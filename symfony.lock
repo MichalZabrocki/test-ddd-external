@@ -8,7 +8,7 @@
             "ref": "1781ff40d8a17d87cf53f8d4cf0c8346ed2bb461"
         },
         "files": [
-            "bin/console"
+            "app/base/bin/console"
         ]
     },
     "symfony/flex": {

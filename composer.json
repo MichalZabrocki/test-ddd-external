@@ -27,7 +27,9 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\Base\\": "app/base/src",
+            "App\\": ["src"]
+
         }
     },
     "autoload-dev": {
@@ -64,6 +66,8 @@
         "symfony": {
             "allow-contrib": false,
             "require": "7.4.*"
-        }
+
+        },
+        "bin-dir": "app/base/bin"
     }
 }
