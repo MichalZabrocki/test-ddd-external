@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\TaskManager\Domain\User\User" table="users" repository-class="App\TaskManager\Infrastructure\User\Repository\UserRepository">
+        <id name="id" type="guid" column="id" length="36" />
+        <embedded name="email" class="App\TaskManager\Domain\User\Email" use-column-prefix="false"/>
+        <field name="name" column="name" length="180" />
+        <field name="roles" type="json" column="roles" />
+        <field name="password" column="password" length="180" />
+    </entity>
+
+</doctrine-mapping>
