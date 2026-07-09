@@ -18,7 +18,7 @@ RUN docker-php-ext-enable amqp apcu opcache
 RUN curl -sS https://get.symfony.com/cli/installer | bash -s - --install-dir /usr/local/bin
 
 RUN curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php
-RUN php /tmp/composer-setup.php --install-dir=/bin/ --filename=composer --version=2.2.4
+RUN php /tmp/composer-setup.php --install-dir=/bin/ --filename=composer --version=2.6.5
 RUN rm /tmp/composer-setup.php
 
 
