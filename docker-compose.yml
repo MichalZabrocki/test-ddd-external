@@ -13,11 +13,11 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - mysql
+      - database
     command: symfony serve --dir=app//base --port=8040 --allow-all-ip
 
 
-  mysql:
+  database:
       image: mariadb:10.7.4
       ports:
           - "3360:3306"

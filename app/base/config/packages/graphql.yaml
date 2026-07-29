@@ -1,10 +1,14 @@
 overblog_graphql:
     definitions:
+        auto_compile: false
         schema:
-            query: Query
+            default:
+                query: Query
         mappings:
             types:
                 -
-                    type: yaml
+                    type: graphql
                     dir: "%kernel.project_dir%/config/graphql/types"
-                    suffix: null
+                    suffix: ~
+    security:
+        handle_cors: true
