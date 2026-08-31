@@ -24,6 +24,12 @@ doctrine:
                 dir: '%kernel.project_dir%/../../src/TaskManager/Infrastructure/User/DoctrineMapping'
                 alias: User
                 prefix: 'App\TaskManager\Domain\User'
+            Task:
+                type: xml
+                is_bundle: false
+                dir: '%kernel.project_dir%/../../src/TaskManager/Infrastructure/Task/DoctrineMapping'
+                alias: Task
+                prefix: 'App\TaskManager\Domain\Task'
         controller_resolver:
             auto_mapping: false
 

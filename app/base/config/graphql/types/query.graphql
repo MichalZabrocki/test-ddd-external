@@ -1,10 +1,41 @@
 type Query {
-  user: User
+    user: User
+    tasks: [Task]
+    task(id: ID!): Task
 }
 
+type Mutation {
+    CreateTask(input: CreateTaskInput!): Task!
+    ChangeTaskStatus(input: ChangeTaskStatusInput): Task!
+    AssignUser(input: AssignUserInput): Task!
+
+}
 
 type User {
   id: ID!
   name: String!
   email:  String!
+}
+
+type Task {
+    id: ID!
+    name: String!
+    description: String!
+    status: String!
+}
+
+input CreateTaskInput {
+    name: String!
+    description: String!
+    assignedUser: String!
+}
+
+input ChangeTaskStatusInput {
+    id: ID!
+    status: String!
+}
+
+input AssignUserInput {
+    id: ID!
+    assignedUser: ID!
 }

@@ -41,3 +41,7 @@ services:
     App\Base\GraphQL\UserResolverMap:
         tags:
             - { name: overblog_graphql.resolver_map, schema: default }
+
+    App\Base\GraphQL\TaskResolverMap:
+        tags:
+            - { name: overblog_graphql.resolver_map, schema: default }

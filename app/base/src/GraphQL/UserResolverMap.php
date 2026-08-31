@@ -10,6 +10,11 @@ use Overblog\GraphQLBundle\Resolver\ResolverMap;
 
 class UserResolverMap extends ResolverMap
 {
+    public function __construct(
+        private readonly CommandBus $commandBus,
+        private readonly QueryBus $queryBus
+    ) {}
+
     public function map() : array
     {
         return [
@@ -18,11 +23,6 @@ class UserResolverMap extends ResolverMap
             ],
         ];
     }
-
-    public function __construct(
-        private readonly CommandBus $commandBus,
-        private readonly QueryBus $queryBus
-    ) {}
 
     public function user()
     {

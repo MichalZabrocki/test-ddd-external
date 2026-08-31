@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\TaskManager\Domain\Task\Task" table="tasks">
+        <id name="id" type="guid" length="36">
+            <generator strategy="NONE"/>
+        </id>
+        <field name="name" type="string" length="255"/>
+        <field name="description" type="text"/>
+
+        <many-to-one field="assignedUser" target-entity="App\TaskManager\Domain\User\User" inversed-by="tasks">
+            <join-column name="assigned_user" referenced-column-name="id" nullable="true"/>
+        </many-to-one>
+
+        <field name="status"
+               type="string"
+               enum-type="App\TaskManager\Domain\Task\TaskStatus"
+               length="32"/>
+
+        <indexes>
+            <index name="idx_assigned_user" columns="assigned_user"/>
+        </indexes>
+    </entity>
+
+</doctrine-mapping>

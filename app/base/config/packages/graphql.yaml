@@ -1,9 +1,10 @@
 overblog_graphql:
     definitions:
-        auto_compile: false
+        auto_compile: true
         schema:
             default:
                 query: Query
+                mutation: Mutation
         mappings:
             types:
                 -
