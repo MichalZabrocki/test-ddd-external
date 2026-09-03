@@ -8,7 +8,12 @@ type Mutation {
     CreateTask(input: CreateTaskInput!): Task!
     ChangeTaskStatus(input: ChangeTaskStatusInput): Task!
     AssignUser(input: AssignUserInput): Task!
+    Login(input: LoginInput!): AuthPayload!
+}
 
+type AuthPayload {
+    token: String!
+    user: User!
 }
 
 type User {
@@ -22,6 +27,11 @@ type Task {
     name: String!
     description: String!
     status: String!
+}
+
+input LoginInput {
+    email: String!
+    password: String!
 }
 
 input CreateTaskInput {
