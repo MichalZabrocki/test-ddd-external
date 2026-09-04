@@ -17,10 +17,8 @@ class CreateTaskHandler implements CommandHandler
 
     public function __invoke(CreateTaskCommand $command)
     {
-        $user = $this->userRepository->findById($command->getUser());
-        if ($user === null) {
-            throw new \Exception('User not found');
-        }
+        $user = $command->getUser();
+
         $task = Task::create($command->getId(), $command->getName(), $command->getDescription(), $user);
         $this->taskRepository->save($task);
     }

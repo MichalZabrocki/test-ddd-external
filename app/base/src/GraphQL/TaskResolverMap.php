@@ -10,15 +10,18 @@ use App\TaskManager\Application\Task\Create\CreateTaskCommand;
 use App\TaskManager\Application\Task\Get\GetTaskQuery;
 use App\TaskManager\Application\User\Find\FindUserQuery;
 use App\TaskManager\Domain\Task\TaskStatus;
+use App\TaskManager\Domain\User\User;
 use Overblog\GraphQLBundle\ExpressionLanguage\ExpressionFunction\Security\GetUser;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Uid\Uuid;
 
 class TaskResolverMap extends ResolverMap
 {
     public function __construct(
         private readonly CommandBus $commandBus,
-        private readonly QueryBus $queryBus
+        private readonly QueryBus $queryBus,
+        private readonly Security $security,
     ) {}
     protected function map()
     {
@@ -32,7 +35,13 @@ class TaskResolverMap extends ResolverMap
             'Mutation' => [
                 'CreateTask' => function ($value, $args) {
                     $id = Uuid::v4();
-                    $this->commandBus->dispatch(new CreateTaskCommand($id, $args['input']['name'], $args['input']['description'], $args['input']['assignedUser']));
+
+                    $user = $this->security->getUser();
+                    if (!$user instanceof User) {
+                        return null;
+                    }
+
+                    $this->commandBus->dispatch(new CreateTaskCommand($id, $args['input']['name'], $args['input']['description'], $user));
 
                     return $this->queryBus->ask(new GetTaskQuery($id));
                     },

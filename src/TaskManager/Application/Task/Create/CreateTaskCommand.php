@@ -12,7 +12,7 @@ class CreateTaskCommand implements Command
         private readonly string $id,
         private readonly string $name,
         private readonly string $description,
-        private readonly string $user
+        private readonly User $user
     ) {}
 
     public function getId(): string
@@ -30,7 +30,7 @@ class CreateTaskCommand implements Command
         return $this->description;
     }
 
-    public function getUser(): string
+    public function getUser(): User
     {
         return $this->user;
     }
