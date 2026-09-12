@@ -18,7 +18,6 @@ class CreateTaskHandler implements CommandHandler
     public function __invoke(CreateTaskCommand $command)
     {
         $user = $command->getUser();
-
         $task = Task::create($command->getId(), $command->getName(), $command->getDescription(), $user);
         $this->taskRepository->save($task);
     }

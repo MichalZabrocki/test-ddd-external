@@ -11,3 +11,7 @@
 
 /app/base/var/cache/
 /.idea/
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###

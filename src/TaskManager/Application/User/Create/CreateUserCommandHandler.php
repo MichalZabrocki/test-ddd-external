@@ -20,7 +20,7 @@ class CreateUserCommandHandler implements CommandHandler
         $email = new Email($command->getEmail());
         $user = new User($command->getId(), $command->getName(), $email, $command->getRoles());
 
-        if ($command->getPassword() !== null && $command->getPassword() !== '') {
+        if ($command->getPassword() !== '') {
             $hashedPassword = $this->passwordHasher->hashPassword($user, $command->getPassword());
             $user->setPassword($hashedPassword);
         }

@@ -8,6 +8,7 @@ use App\Shared\Infrastructure\Security\JwtService;
 use App\TaskManager\Application\User\UserDTO;
 use App\TaskManager\Domain\User\User;
 use App\TaskManager\Domain\User\UserRepositoryInterface;
+use Overblog\GraphQLBundle\Error\UserError;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -29,6 +30,7 @@ class UserResolverMap extends ResolverMap
         return [
             'Query' => [
                 'user' => fn() => $this->user(),
+                'users' => fn() => $this->users(),
             ],
             'Mutation' => [
                 'Login' => fn($value, $args) => $this->login($args['input']['email'], $args['input']['password']),
@@ -40,11 +42,21 @@ class UserResolverMap extends ResolverMap
     {
         $user = $this->security->getUser();
         if (!$user instanceof User) {
-            return null;
+            throw new UserError('User not found.');
         }
 
         return UserDTO::fromEntity($user);
     }
+
+    public function users(): array
+    {
+        if (!$this->security->isGranted('ROLE_ADMIN')) {
+            throw new UserError('User dont have access.');
+        }
+
+        return array_map(fn(User $user) => UserDTO::fromEntity($user), $this->userRepository->findAll());
+    }
+
 
     public function login(string $email, string $password): array
     {

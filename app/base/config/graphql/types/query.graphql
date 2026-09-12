@@ -1,5 +1,6 @@
 type Query {
-    user: User @access(expression: "@=isAuthenticated()")
+    user: User
+    users: [User]
     tasks: [Task]
     task(id: ID!): Task
 }
@@ -37,7 +38,6 @@ input LoginInput {
 input CreateTaskInput {
     name: String!
     description: String!
-    assignedUser: String!
 }
 
 input ChangeTaskStatusInput {
