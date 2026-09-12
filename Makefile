@@ -17,3 +17,6 @@ rebuild:
 	docker compose build --pull --force-rm --no-cache
 	make install
 	make start
+
+phpstan:
+	vendor/bin/phpstan

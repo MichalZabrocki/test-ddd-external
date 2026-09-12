@@ -15,7 +15,7 @@ class CreateUserCommandHandler implements CommandHandler
         private readonly UserPasswordHasherInterface $passwordHasher,
     ) {}
 
-    public function __invoke(CreateUserCommand $command)
+    public function __invoke(CreateUserCommand $command): void
     {
         $email = new Email($command->getEmail());
         $user = new User($command->getId(), $command->getName(), $email, $command->getRoles());

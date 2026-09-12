@@ -4,6 +4,7 @@ namespace App\TaskManager\Domain\Task;
 
 use App\TaskManager\Domain\Task\Event\AssignUser;
 use App\TaskManager\Domain\Task\Event\TaskCreated;
+use App\TaskManager\Domain\Task\Event\TaskEvent;
 use App\TaskManager\Domain\Task\Event\TaskStatusChanged;
 use App\TaskManager\Domain\User\User;
 use DateTimeImmutable;
@@ -55,7 +56,7 @@ class Task
         $this->handle($event);
     }
 
-    private function handle($event): void
+    private function handle(TaskEvent $event): void
     {
         if ($event instanceof TaskCreated) {
             $this->id = $event->id;

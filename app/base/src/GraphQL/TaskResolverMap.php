@@ -4,14 +4,17 @@ namespace App\Base\GraphQL;
 
 use App\Shared\Domain\Bus\Command\CommandBus;
 use App\Shared\Domain\Bus\Query\QueryBus;
+use App\Shared\Domain\Bus\Query\Response;
 use App\TaskManager\Application\Task\AssignUser\AssignUserCommand;
 use App\TaskManager\Application\Task\ChangeStatus\ChangeStatusCommand;
 use App\TaskManager\Application\Task\Create\CreateTaskCommand;
 use App\TaskManager\Application\Task\Get\GetAllTaskQuery;
 use App\TaskManager\Application\Task\Get\GetTaskQuery;
 use App\TaskManager\Application\Task\TaskDTO;
+use App\TaskManager\Application\Task\TaskListDTO;
 use App\TaskManager\Domain\Task\TaskStatus;
 use App\TaskManager\Domain\User\User;
+use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Error\UserError;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -32,14 +35,14 @@ class TaskResolverMap extends ResolverMap
                 'task' => fn($value, $args) => $this->task($args['id']),
             ],
             'Mutation' => [
-                'CreateTask' => fn($value, $args) => $this->createTask($args, $value),
-                'ChangeTaskStatus' => fn($value, $args) => $this->changeTaskStatus($args, $value),
-                'AssignUser' => fn($value, $args) => $this->assignUser($args, $value)
+                'CreateTask' => fn($value, $args) => $this->createTask($args),
+                'ChangeTaskStatus' => fn($value, $args) => $this->changeTaskStatus($args),
+                'AssignUser' => fn($value, $args) => $this->assignUser($args)
             ]
         ];
     }
 
-    private function task($id)
+    private function task(string $id): ?Response
     {
         $user = $this->security->getUser();
 
@@ -52,7 +55,7 @@ class TaskResolverMap extends ResolverMap
 
         return $task;
     }
-    private function tasks()
+    private function tasks(): ?Response
     {
         if(!$this->security->isGranted('ROLE_ADMIN')) {
             throw new UserError('User dont have access.');
@@ -62,7 +65,7 @@ class TaskResolverMap extends ResolverMap
         return $tasl;
     }
 
-    private function createTask($args, $value)
+    private function createTask(Argument $args): ?Response
     {
         $id = Uuid::v4();
 
@@ -76,7 +79,7 @@ class TaskResolverMap extends ResolverMap
         return $this->queryBus->ask(new GetTaskQuery($id));
     }
 
-    private function changeTaskStatus($args, $value)
+    private function changeTaskStatus(Argument $args): ?Response
     {
         $user = $this->security->getUser();
         if (!$user instanceof User) {
@@ -90,7 +93,7 @@ class TaskResolverMap extends ResolverMap
         return $this->queryBus->ask(new GetTaskQuery($id));
     }
 
-    private function assignUser($args, $value)
+    private function assignUser(Argument $args): ?Response
     {
         $user = $this->security->getUser();
         if (!$user instanceof User) {

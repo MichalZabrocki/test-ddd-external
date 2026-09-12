@@ -14,7 +14,7 @@ class GetAllTaskQueryHandler implements QueryHandler
         private TaskRepositoryInterface $taskRepository
     ){}
 
-    public function __invoke(GetAllTaskQuery $command)
+    public function __invoke(GetAllTaskQuery $command): TaskListDTO
     {
         return TaskListDTO::fromList(array_map(fn(Task $task) => TaskDTO::fromEntity($task), $this->taskRepository->findAll()));
     }
