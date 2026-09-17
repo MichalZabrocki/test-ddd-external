@@ -83,6 +83,7 @@
         "config-dir": "app/base/config"
     },
     "require-dev": {
+        "phpat/phpat": "^0.12.5",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^2.2",
         "phpstan/phpstan-doctrine": "^2.0",
